@@ -1,2 +1,2 @@
 # mycontacts_demo
-Aplicación demo usando Flutter
+Aplicación demo usando Flutter y Dart
