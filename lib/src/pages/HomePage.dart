@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Contact.dart';
+import 'ContactPage.dart';
+import '../models/Contact.dart';
 
 class HomePage extends StatefulWidget {
   final String titleHome;
@@ -50,13 +51,13 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final result = await Navigator.push(context,
+          final Contact result = await Navigator.push(context,
               MaterialPageRoute(builder: (context) {
-            return Contact();
+            return ContactPage();
           }));
           print('El resultado es $result');
           if (result != null) {
-            listS.add(result);
+            listS.add(result.name);
             setState(() {});
           }
         },
