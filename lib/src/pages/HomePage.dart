@@ -14,30 +14,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Contact> listS = List<Contact>();
+  bool emptyList = false;
 
-  List<String> listS = List<String>();
-
-  Widget _listItems() {
-    if (listS.length > 0) {
-      return ListView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: listS.length,
-        itemBuilder: (context, i) {
-          final name = listS[i];
-          return Column(
-            children: <Widget>[
-              ListTile(
-                title: Text(name),
-              ),
-              Divider()
-            ],
-          );
-        },
-      );
-    } else {
-      return Center(
-        child: Text("No hay contactos agregados"),
-      );
+  @override
+  void initState() {
+    super.initState();
+    if (!emptyList) {
+      listS.add(Contact(name: "Iron Man", email: "iron@man.com", birthDate: "2019-01-01"));
+      listS.add(Contact(name: "Goku", email: "goku@dbz.com", birthDate: "2019-02-07"));
+      listS.add(Contact(name: "Hulk", email: "hulk@marvel.com", birthDate: "2018-11-09"));
+      listS.add(Contact(name: "Capitan America", email: "cap@marvel.com", birthDate: "1990-10-27"));
+      listS.add(Contact(name: "Bugs Bunny", email: "bugs@looneytoons.com", birthDate: "2007-12-14"));
+      listS.add(Contact(name: "Chespirito", email: "chespirito@elchavo.com", birthDate: "1995-04-19"));
     }
   }
 
@@ -57,13 +46,71 @@ class _HomePageState extends State<HomePage> {
           }));
           print('El resultado es $result');
           if (result != null) {
-            listS.add(result.name);
+            listS.add(result);
             setState(() {});
           }
         },
         tooltip: "Agregar Nota",
-        child: Icon(Icons.add_comment),
+        child: Icon(Icons.person_add),
       ),
     );
+  }
+
+  Widget _listItems() {
+    if (listS.length > 0) {
+      return ListView.builder(
+        padding: EdgeInsets.all(10),
+        itemCount: listS.length,
+        itemBuilder: (context, i) {
+          final contact = listS[i];
+          final indexImage = i + 1;
+          return Column(
+            children: <Widget>[
+              ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.network(
+                    'https://picsum.photos/50?image=$indexImage',
+                  ),
+                ),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(contact.name),
+                    Text(contact.birthDate)
+                  ],
+                ),
+                subtitle: Text(contact.email),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(contact.name),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(125),
+                                child: Image.network(
+                                  'https://picsum.photos/250?image=$indexImage',
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      });
+                },
+              ),
+              Divider()
+            ],
+          );
+        },
+      );
+    } else {
+      return Center(
+        child: Text("No hay contactos agregados"),
+      );
+    }
   }
 }

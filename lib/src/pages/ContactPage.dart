@@ -70,7 +70,7 @@ class _ContactPageState extends State<ContactPage> {
                   color: Colors.transparent,
                 ),
                 TextField(
-                  controller: _txtEmailController,
+                    controller: _txtEmailController,
                     keyboardType: TextInputType.emailAddress,
                     maxLength: 40,
                     decoration: InputDecoration(
@@ -137,9 +137,8 @@ class _ContactPageState extends State<ContactPage> {
         initialDate: DateTime.now(),
         locale: Locale('es', 'ES'));
 
-    DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-    print(dateFormat.format(picked));
     if (picked != null) {
+      DateFormat dateFormat = DateFormat('yyyy-MM-dd');
       setState(() {
         _birthDate = dateFormat.format(picked);
         _txtBirthDateController.text = _birthDate;
@@ -149,40 +148,42 @@ class _ContactPageState extends State<ContactPage> {
 
   void _onPresBtnAccept(BuildContext context) {
     bool isValid = true;
-    String message = 'Para crear un contacto son necesarios los siguientes datos:\n\n';
+    String message =
+        'Para crear un contacto son necesarios los siguientes datos:\n\n';
 
-    if (_txtNameController.text.isEmpty) {
+    // if (_txtNameController.text.isEmpty) {
+    if (_name.isEmpty) {
       isValid = false;
       message += '- Nombre\n';
     }
 
-    if (_txtEmailController.text.isEmpty) {
+    // if (_txtEmailController.text.isEmpty) {
+    if (_email.isEmpty) {
       isValid = false;
       message += '- Email\n';
     }
 
-    if (_txtBirthDateController.text.isEmpty) {
+    // if (_txtBirthDateController.text.isEmpty) {
+    if (_birthDate.isEmpty) {
       isValid = false;
       message += '- Fecha de nacimiento\n';
     }
 
     if (!isValid) {
       showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(message),
-          );
-        }
-      );
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(message),
+            );
+          });
       return;
     }
 
     Contact contact = Contact(
-      name: _txtNameController.text,
-      email: _txtEmailController.text,
-      birthDate: _txtBirthDateController.text
-    );
+        name: _txtNameController.text,
+        email: _txtEmailController.text,
+        birthDate: _txtBirthDateController.text);
 
     Navigator.pop(context, contact);
   }
