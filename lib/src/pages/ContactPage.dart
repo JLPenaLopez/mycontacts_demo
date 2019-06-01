@@ -3,6 +3,11 @@ import 'package:intl/intl.dart';
 import '../models/Contact.dart';
 
 class ContactPage extends StatefulWidget {
+  final String titleContact = "Contacto";
+  final String title;
+
+  ContactPage({this.title});
+
   @override
   _ContactPageState createState() {
     return _ContactPageState();
@@ -37,9 +42,12 @@ class _ContactPageState extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final Contact contact = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Contacto"),
+        title: Text(contact.name),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -110,7 +118,7 @@ class _ContactPageState extends State<ContactPage> {
           ),
           Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.only(top: 5, right: 10, bottom: 10, left: 10),
+              margin: EdgeInsets.only(top: 5, right: 10, bottom: 15, left: 10),
               child: SizedBox(
                 height: 50,
                 width: double.infinity,
@@ -118,7 +126,12 @@ class _ContactPageState extends State<ContactPage> {
                   elevation: 100,
                   color: Colors.red,
                   textColor: Colors.white,
-                  child: Text('Agregar'),
+                  child: Text(
+                    'Agregar',
+                    style: TextStyle(fontSize: 17),
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
                   onPressed: () {
                     _onPresBtnAccept(context);
                   },

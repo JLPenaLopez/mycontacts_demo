@@ -4,7 +4,6 @@ import '../models/Contact.dart';
 
 class HomePage extends StatefulWidget {
   final String titleHome;
-
   HomePage(this.titleHome);
 
   @override
@@ -20,18 +19,26 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    print("initState");
     if (!emptyList) {
-      listS.add(Contact(name: "Iron Man", email: "iron@man.com", birthDate: "2019-01-01"));
-      listS.add(Contact(name: "Goku", email: "goku@dbz.com", birthDate: "2019-02-07"));
-      listS.add(Contact(name: "Hulk", email: "hulk@marvel.com", birthDate: "2018-11-09"));
-      listS.add(Contact(name: "Capitan America", email: "cap@marvel.com", birthDate: "1990-10-27"));
-      listS.add(Contact(name: "Bugs Bunny", email: "bugs@looneytoons.com", birthDate: "2007-12-14"));
-      listS.add(Contact(name: "Chespirito", email: "chespirito@elchavo.com", birthDate: "1995-04-19"));
+      listS..add(Contact(name: "Iron Man", email: "iron@man.com", birthDate: "2019-01-01"))
+           ..add(Contact(name: "Goku", email: "goku@dbz.com", birthDate: "2019-02-07"))
+            ..add(Contact(name: "Hulk", email: "hulk@marvel.com", birthDate: "2018-11-09"))
+            ..add(Contact(name: "Capitan America", email: "cap@marvel.com", birthDate: "1990-10-27"))
+            ..add(Contact(name: "Bugs Bunny", email: "bugs@looneytoons.com", birthDate: "2007-12-14"))
+            ..add(Contact(name: "Chespirito", email: "chespirito@elchavo.com", birthDate: "1995-04-19"));
     }
   }
 
   @override
+  void didUpdateWidget(Widget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateConfig");
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print("build");
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.titleHome),
@@ -40,11 +47,15 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final Contact result = await Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-            return ContactPage();
-          }));
-          print('El resultado es $result');
+          //LLamado usando metodo tradicional sin rutas
+          // final Route<Contact> route = MaterialPageRoute(builder: (context) {
+          //   return ContactPage();
+          // });
+          // final Contact result = await Navigator.push(context, route);
+          // final Contact result = await Navigator.pushNamed(context, 'contact') as Contact;
+          final Contact result = await Navigator.pushNamed(context, 'contact', arguments: Contact(
+            name:'Jorge')) as Contact;
+          // final result = await Navigator.of(context).pushNamed('contact') as Contact;
           if (result != null) {
             listS.add(result);
             setState(() {});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mycontacts_demo/src/pages/ContactPage.dart';
 
 import 'src/pages/HomePage.dart';
 
@@ -24,7 +25,34 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         // primaryColor: Colors.yellow
       ),
-      home: HomePage("Mis Notas")
+      // home: HelloWorld(),
+      initialRoute: '/',
+      routes: <String,WidgetBuilder>{
+        '/': ( BuildContext context ) {
+          return HomePage("Mis Notas");
+        },
+        'contact' : ( BuildContext context ) => ContactPage()
+      }
+    );
+  }
+}
+
+class HelloWorld extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blueGrey,
+      appBar: AppBar(
+        title: Text("Welcome Flutter")
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            print("Hola!");
+          },
+          child: Text("Tap Me")
+        )
+      )
     );
   }
 }
